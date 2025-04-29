@@ -1,0 +1,83 @@
+process:
+  id: breadboard_assembly
+  name: Breadboard Project Process
+  description: Process for building a pre-defined breadboard-based project
+  steps:
+    - type: start
+      id: start
+      name: Start Project
+      next: review_requirements
+
+    - type: task
+      id: review_requirements
+      name: Review Requirements
+      description: Read and understand the project requirements
+      next: collect_components
+
+    - type: task
+      id: collect_components
+      name: Collect Components
+      description: Gather all required electronic components
+      next: collect_tools
+
+    - type: task
+      id: collect_tools
+      name: Collect Tools
+      description: Gather necessary tools for assembly
+      next: review_diagram
+
+    - type: task
+      id: review_diagram
+      name: Review Circuit Diagram
+      description: Carefully read and understand the circuit diagram
+      next: insert_components
+
+    - type: task
+      id: insert_components
+      name: Insert Components
+      description: Place all components on the breadboard according to diagram
+      next: check_circuit
+
+    - type: decision
+      id: check_circuit
+      name: Check Circuit
+      description: Verify all connections match the circuit diagram
+      next:
+        correct: apply_power
+        incorrect: insert_components
+
+    - type: task
+      id: apply_power
+      name: Apply Power
+      description: Safely apply power to the circuit
+      next: execute_code
+
+    - type: task
+      id: execute_code
+      name: Execute Code
+      description: Run the required code
+      next: verify_operation
+
+    - type: decision
+      id: verify_operation
+      name: Verify Operation
+      description: Check if the circuit works as expected
+      next:
+        success: end_success
+        failure: diagnose_issues
+
+    - type: task
+      id: diagnose_issues
+      name: Diagnose Issues
+      description: Identify what's not working correctly
+      next: fix_errors
+
+    - type: task
+      id: fix_errors
+      name: Fix Errors
+      description: Make necessary corrections
+      next: insert_components
+
+    - type: end
+      id: end_success
+      name: Project Complete

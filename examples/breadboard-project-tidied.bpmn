@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.6.1">
+  <bpmn:process id="breadboard_assembly" name="Breadboard Project Process">
+    <bpmn:startEvent id="start" name="Start Project" />
+    <bpmn:task id="review_requirements" name="Review Requirements" />
+    <bpmn:task id="collect_components" name="Collect Components" />
+    <bpmn:task id="collect_tools" name="Collect Tools" />
+    <bpmn:task id="review_diagram" name="Review Circuit Diagram" />
+    <bpmn:task id="insert_components" name="Insert Components">
+      <bpmn:incoming>flow_diagnose_issues_fix_errors</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="check_circuit" name="Check Circuit" />
+    <bpmn:task id="apply_power" name="Apply Power" />
+    <bpmn:task id="execute_code" name="Execute Code" />
+    <bpmn:exclusiveGateway id="verify_operation" name="Verify Operation" />
+    <bpmn:task id="diagnose_issues" name="Diagnose Issues" />
+    <bpmn:endEvent id="end_success" name="Project&#10;Complete" />
+    <bpmn:sequenceFlow id="flow_start_review_requirements" sourceRef="start" targetRef="review_requirements" />
+    <bpmn:sequenceFlow id="flow_review_requirements_collect_components" sourceRef="review_requirements" targetRef="collect_components" />
+    <bpmn:sequenceFlow id="flow_collect_components_collect_tools" sourceRef="collect_components" targetRef="collect_tools" />
+    <bpmn:sequenceFlow id="flow_collect_tools_review_diagram" sourceRef="collect_tools" targetRef="review_diagram" />
+    <bpmn:sequenceFlow id="flow_review_diagram_insert_components" sourceRef="review_diagram" targetRef="insert_components" />
+    <bpmn:sequenceFlow id="flow_insert_components_check_circuit" sourceRef="insert_components" targetRef="check_circuit" />
+    <bpmn:sequenceFlow id="flow_check_circuit_apply_power" sourceRef="check_circuit" targetRef="apply_power">
+      <bpmn:conditionExpression>correct</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_check_circuit_insert_components" sourceRef="check_circuit" targetRef="insert_components">
+      <bpmn:conditionExpression>incorrect</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_apply_power_execute_code" sourceRef="apply_power" targetRef="execute_code" />
+    <bpmn:sequenceFlow id="flow_execute_code_verify_operation" sourceRef="execute_code" targetRef="verify_operation" />
+    <bpmn:sequenceFlow id="flow_verify_operation_end_success" name="OK" sourceRef="verify_operation" targetRef="end_success">
+      <bpmn:conditionExpression>success</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_verify_operation_diagnose_issues" name="problem" sourceRef="verify_operation" targetRef="diagnose_issues">
+      <bpmn:conditionExpression>failure</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_diagnose_issues_fix_errors" sourceRef="diagnose_issues" targetRef="insert_components" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_breadboard_assembly">
+    <bpmndi:BPMNPlane id="BPMNPlane_breadboard_assembly" bpmnElement="breadboard_assembly">
+      <bpmndi:BPMNShape id="BPMNShape_collect_tools" bpmnElement="collect_tools" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="330" y="340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_collect_components" bpmnElement="collect_components" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="330" y="210" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_review_requirements" bpmnElement="review_requirements" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="330" y="90" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_start" bpmnElement="start" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="160" y="90" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="179" y="123" width="61" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_review_diagram" bpmnElement="review_diagram" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="330" y="460" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_insert_components" bpmnElement="insert_components" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="330" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_check_circuit" bpmnElement="check_circuit" isMarkerVisible="true" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="330" y="690" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="254" y="723" width="66" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_apply_power" bpmnElement="apply_power" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="330" y="810" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_execute_code" bpmnElement="execute_code" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="330" y="920" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_verify_operation" bpmnElement="verify_operation" isMarkerVisible="true" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="330" y="1030" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="241" y="1063" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_end_success" bpmnElement="end_success" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="480" y="1030" width="100" height="80" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="506" y="1056" width="48" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_diagnose_issues" bpmnElement="diagnose_issues" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="330" y="1140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_start_review_requirements" bpmnElement="flow_start_review_requirements">
+        <di:waypoint x="260" y="130" />
+        <di:waypoint x="330" y="130" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_review_requirements_collect_components" bpmnElement="flow_review_requirements_collect_components">
+        <di:waypoint x="380" y="170" />
+        <di:waypoint x="380" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_collect_components_collect_tools" bpmnElement="flow_collect_components_collect_tools">
+        <di:waypoint x="380" y="290" />
+        <di:waypoint x="380" y="340" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_collect_tools_review_diagram" bpmnElement="flow_collect_tools_review_diagram">
+        <di:waypoint x="380" y="420" />
+        <di:waypoint x="380" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_review_diagram_insert_components" bpmnElement="flow_review_diagram_insert_components">
+        <di:waypoint x="380" y="540" />
+        <di:waypoint x="380" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_insert_components_check_circuit" bpmnElement="flow_insert_components_check_circuit">
+        <di:waypoint x="380" y="660" />
+        <di:waypoint x="380" y="690" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_check_circuit_apply_power" bpmnElement="flow_check_circuit_apply_power">
+        <di:waypoint x="380" y="770" />
+        <di:waypoint x="380" y="810" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_check_circuit_insert_components" bpmnElement="flow_check_circuit_insert_components">
+        <di:waypoint x="430" y="730" />
+        <di:waypoint x="480" y="730" />
+        <di:waypoint x="480" y="620" />
+        <di:waypoint x="430" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_apply_power_execute_code" bpmnElement="flow_apply_power_execute_code">
+        <di:waypoint x="380" y="890" />
+        <di:waypoint x="380" y="920" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_execute_code_verify_operation" bpmnElement="flow_execute_code_verify_operation">
+        <di:waypoint x="380" y="1000" />
+        <di:waypoint x="380" y="1030" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_verify_operation_end_success" bpmnElement="flow_verify_operation_end_success">
+        <di:waypoint x="430" y="1070" />
+        <di:waypoint x="480" y="1070" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="447" y="1052" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_verify_operation_diagnose_issues" bpmnElement="flow_verify_operation_diagnose_issues">
+        <di:waypoint x="380" y="1110" />
+        <di:waypoint x="380" y="1140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="390" y="1113" width="40" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_diagnose_issues_fix_errors" bpmnElement="flow_diagnose_issues_fix_errors">
+        <di:waypoint x="380" y="1220" />
+        <di:waypoint x="380" y="1250" />
+        <di:waypoint x="180" y="1250" />
+        <di:waypoint x="190" y="620" />
+        <di:waypoint x="330" y="620" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

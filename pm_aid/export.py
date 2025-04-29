@@ -4,10 +4,13 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 from .model import Process, Event, Task, Gateway, SequenceFlow
 
+# Namespace constants
 BPMN20_NS = "http://www.omg.org/spec/BPMN/20100524/MODEL"
 BPMNDI_NS = "http://www.omg.org/spec/BPMN/20100524/DI"
 DC_NS = "http://www.omg.org/spec/DD/20100524/DC"
 DI_NS = "http://www.omg.org/spec/DD/20100524/DI"
+# Standard targetNamespace for all BPMN processes in this application
+TARGET_NS = "http://bpmn.io/schema/bpmn"
 
 class BPMNExporter:
     def __init__(self):
@@ -26,10 +29,15 @@ class BPMNExporter:
             output_path: Path where to save the .bpmn file
             auto_layout: Whether to automatically generate layout information
         """
-        # Create the root element with namespaces
-        definitions = ET.Element(f"{{{BPMN20_NS}}}definitions")
+        # Register namespaces with ElementTree
         for prefix, uri in self.ns.items():
-            definitions.set(f"xmlns:{prefix}", uri)
+            ET.register_namespace(prefix, uri)
+        
+        # Create the root element with namespaces - Using Clark notation
+        definitions = ET.Element(f"{{{BPMN20_NS}}}definitions")
+        
+        # Add targetNamespace attribute
+        definitions.set("targetNamespace", TARGET_NS)
         
         # Create the process element
         process_elem = ET.SubElement(definitions, f"{{{BPMN20_NS}}}process")
@@ -44,10 +52,18 @@ class BPMNExporter:
         if auto_layout:
             self._add_diagram(definitions, process)
         
-        # Write the XML file
+        # Write the XML file - being careful with encoding and pretty printing
         tree = ET.ElementTree(definitions)
-        xml_str = ET.tostring(definitions, encoding='unicode')
-        pretty_xml = minidom.parseString(xml_str).toprettyxml(indent="  ")
+        
+        # First write to byte string
+        xml_bytes = ET.tostring(definitions, encoding="utf-8")
+        
+        # Then use minidom to prettify
+        dom = minidom.parseString(xml_bytes)
+        pretty_xml = dom.toprettyxml(indent="  ", encoding="utf-8").decode("utf-8")
+        
+        # Clean up extra whitespace that minidom sometimes adds
+        pretty_xml = "\n".join(line for line in pretty_xml.split("\n") if line.strip())
         
         with open(output_path, 'w', encoding='utf-8') as f:
             f.write(pretty_xml)

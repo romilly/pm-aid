@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="breadboard_assembly" name="Breadboard Project Process">
+    <bpmn:startEvent id="start" name="Start Project"/>
+    <bpmn:task id="review_requirements" name="Review Requirements"/>
+    <bpmn:task id="collect_components" name="Collect Components"/>
+    <bpmn:task id="collect_tools" name="Collect Tools"/>
+    <bpmn:task id="review_diagram" name="Review Circuit Diagram"/>
+    <bpmn:task id="insert_components" name="Insert Components"/>
+    <bpmn:exclusiveGateway id="check_circuit" name="Check Circuit"/>
+    <bpmn:task id="apply_power" name="Apply Power"/>
+    <bpmn:task id="execute_code" name="Execute Code"/>
+    <bpmn:exclusiveGateway id="verify_operation" name="Verify Operation"/>
+    <bpmn:task id="diagnose_issues" name="Diagnose Issues"/>
+    <bpmn:task id="fix_errors" name="Fix Errors"/>
+    <bpmn:endEvent id="end_success" name="Project Complete"/>
+    <bpmn:sequenceFlow id="flow_start_review_requirements" sourceRef="start" targetRef="review_requirements"/>
+    <bpmn:sequenceFlow id="flow_review_requirements_collect_components" sourceRef="review_requirements" targetRef="collect_components"/>
+    <bpmn:sequenceFlow id="flow_collect_components_collect_tools" sourceRef="collect_components" targetRef="collect_tools"/>
+    <bpmn:sequenceFlow id="flow_collect_tools_review_diagram" sourceRef="collect_tools" targetRef="review_diagram"/>
+    <bpmn:sequenceFlow id="flow_review_diagram_insert_components" sourceRef="review_diagram" targetRef="insert_components"/>
+    <bpmn:sequenceFlow id="flow_insert_components_check_circuit" sourceRef="insert_components" targetRef="check_circuit"/>
+    <bpmn:sequenceFlow id="flow_check_circuit_apply_power" sourceRef="check_circuit" targetRef="apply_power">
+      <bpmn:conditionExpression>correct</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_check_circuit_insert_components" sourceRef="check_circuit" targetRef="insert_components">
+      <bpmn:conditionExpression>incorrect</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_apply_power_execute_code" sourceRef="apply_power" targetRef="execute_code"/>
+    <bpmn:sequenceFlow id="flow_execute_code_verify_operation" sourceRef="execute_code" targetRef="verify_operation"/>
+    <bpmn:sequenceFlow id="flow_verify_operation_end_success" sourceRef="verify_operation" targetRef="end_success">
+      <bpmn:conditionExpression>success</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_verify_operation_diagnose_issues" sourceRef="verify_operation" targetRef="diagnose_issues">
+      <bpmn:conditionExpression>failure</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="flow_diagnose_issues_fix_errors" sourceRef="diagnose_issues" targetRef="fix_errors"/>
+    <bpmn:sequenceFlow id="flow_fix_errors_insert_components" sourceRef="fix_errors" targetRef="insert_components"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_breadboard_assembly">
+    <bpmndi:BPMNPlane id="BPMNPlane_breadboard_assembly" bpmnElement="breadboard_assembly">
+      <bpmndi:BPMNShape id="BPMNShape_start" bpmnElement="start">
+        <dc:Bounds x="100" y="100" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_review_requirements" bpmnElement="review_requirements">
+        <dc:Bounds x="250" y="100" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_collect_components" bpmnElement="collect_components">
+        <dc:Bounds x="400" y="100" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_collect_tools" bpmnElement="collect_tools">
+        <dc:Bounds x="100" y="250" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_review_diagram" bpmnElement="review_diagram">
+        <dc:Bounds x="250" y="250" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_insert_components" bpmnElement="insert_components">
+        <dc:Bounds x="400" y="250" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_check_circuit" bpmnElement="check_circuit">
+        <dc:Bounds x="100" y="400" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_apply_power" bpmnElement="apply_power">
+        <dc:Bounds x="250" y="400" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_execute_code" bpmnElement="execute_code">
+        <dc:Bounds x="400" y="400" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_verify_operation" bpmnElement="verify_operation">
+        <dc:Bounds x="100" y="550" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_diagnose_issues" bpmnElement="diagnose_issues">
+        <dc:Bounds x="250" y="550" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_fix_errors" bpmnElement="fix_errors">
+        <dc:Bounds x="400" y="550" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_end_success" bpmnElement="end_success">
+        <dc:Bounds x="100" y="700" width="100" height="80"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_start_review_requirements" bpmnElement="flow_start_review_requirements">
+        <di:waypoint x="150" y="140"/>
+        <di:waypoint x="300" y="140"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_review_requirements_collect_components" bpmnElement="flow_review_requirements_collect_components">
+        <di:waypoint x="300" y="140"/>
+        <di:waypoint x="450" y="140"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_collect_components_collect_tools" bpmnElement="flow_collect_components_collect_tools">
+        <di:waypoint x="450" y="140"/>
+        <di:waypoint x="150" y="290"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_collect_tools_review_diagram" bpmnElement="flow_collect_tools_review_diagram">
+        <di:waypoint x="150" y="290"/>
+        <di:waypoint x="300" y="290"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_review_diagram_insert_components" bpmnElement="flow_review_diagram_insert_components">
+        <di:waypoint x="300" y="290"/>
+        <di:waypoint x="450" y="290"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_insert_components_check_circuit" bpmnElement="flow_insert_components_check_circuit">
+        <di:waypoint x="450" y="290"/>
+        <di:waypoint x="150" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_check_circuit_apply_power" bpmnElement="flow_check_circuit_apply_power">
+        <di:waypoint x="150" y="440"/>
+        <di:waypoint x="300" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_check_circuit_insert_components" bpmnElement="flow_check_circuit_insert_components">
+        <di:waypoint x="150" y="440"/>
+        <di:waypoint x="450" y="290"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_apply_power_execute_code" bpmnElement="flow_apply_power_execute_code">
+        <di:waypoint x="300" y="440"/>
+        <di:waypoint x="450" y="440"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_execute_code_verify_operation" bpmnElement="flow_execute_code_verify_operation">
+        <di:waypoint x="450" y="440"/>
+        <di:waypoint x="150" y="590"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_verify_operation_end_success" bpmnElement="flow_verify_operation_end_success">
+        <di:waypoint x="150" y="590"/>
+        <di:waypoint x="150" y="740"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_verify_operation_diagnose_issues" bpmnElement="flow_verify_operation_diagnose_issues">
+        <di:waypoint x="150" y="590"/>
+        <di:waypoint x="300" y="590"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_diagnose_issues_fix_errors" bpmnElement="flow_diagnose_issues_fix_errors">
+        <di:waypoint x="300" y="590"/>
+        <di:waypoint x="450" y="590"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_flow_fix_errors_insert_components" bpmnElement="flow_fix_errors_insert_components">
+        <di:waypoint x="450" y="590"/>
+        <di:waypoint x="450" y="290"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

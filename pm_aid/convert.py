@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Union
-from pm.parser import BPMNParser
-from .export import BPMNExporter
+from pm_aid.parser import BPMNParser
+from pm_aid.export import BPMNExporter
 
 def convert_yaml_to_bpmn(file_path: Union[str, Path], auto_layout: bool = True) -> Path:
     """Convert a YAML process definition to BPMN format.
@@ -48,3 +48,6 @@ def convert_yaml_to_bpmn(file_path: Union[str, Path], auto_layout: bool = True) 
         
     except Exception as e:
         raise RuntimeError(f"Error converting {yaml_path} to BPMN: {str(e)}") from e
+
+if __name__ == "__main__":
+    convert_yaml_to_bpmn('../examples/breadboard-project.yaml')

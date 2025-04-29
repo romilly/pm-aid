@@ -10,6 +10,23 @@ PM-Aid allows you to define business processes in a simple YAML format and conve
 - Automatic conversion to standard BPMN 2.0 XML
 - Auto-layout capabilities for visual representation
 
+## Road Map
+
+The current version is minimal; it was written as a proof of concept and has no tests.
+
+
+Next steps:
+* add tests!
+* automate layout
+* add pool, lanes to YAML schema and code
+* add sub-processes, documents and data sources.
+* add code to get AI to generate the YAML from English text.
+
+In the long term, I want to build a DSL that will include process definition, Planguage specifications for projects and products, EVO processes, process libraries and support for Wardley mapping.
+
+I also want to build a web app that will allow users to create and manage their processes.
+
+
 ## Installation
 
 ```bash
